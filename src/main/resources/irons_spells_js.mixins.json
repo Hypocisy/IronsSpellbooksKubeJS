@@ -7,7 +7,6 @@
     "AbstractSpellMixin",
     "ClientInitEventJSMixin",
     "FormatterRegistryMixin",
-    "IronsSpellbooksMixin",
     "ManaBarOverlayMixin",
     "NameResolverMixin",
     "PathfinderMobMixin",

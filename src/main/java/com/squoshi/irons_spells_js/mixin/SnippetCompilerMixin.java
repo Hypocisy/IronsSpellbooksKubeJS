@@ -3,11 +3,14 @@ package com.squoshi.irons_spells_js.mixin;
 import com.probejs.ProbeCommands;
 import com.probejs.specials.SnippetCompiler;
 import dev.latvian.mods.kubejs.registry.RegistryInfo;
+import dev.latvian.mods.kubejs.registry.RegistryType;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.RegistryManager;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
@@ -22,7 +25,7 @@ import java.util.Map;
 public class SnippetCompilerMixin {
     @Inject(method = "putRegistry", at = @At(value = "HEAD"), cancellable = true)
     private static <T> void irons_spells_js$useForge(Map<String, List<String>> registries, String type, ResourceKey<Registry<T>> registry, CallbackInfo ci){
-        var builtinRegistry = RegistryInfo.of(registry).getVanillaRegistry();
+        var builtinRegistry = Registries;
         if (builtinRegistry == null) {
             builtinRegistry = ProbeCommands.COMMAND_LEVEL.registryAccess().registry(registry).orElse(null);
         }

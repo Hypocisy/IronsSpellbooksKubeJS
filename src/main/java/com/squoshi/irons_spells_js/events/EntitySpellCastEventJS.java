@@ -1,49 +1,49 @@
 package com.squoshi.irons_spells_js.events;
 
-import dev.latvian.mods.kubejs.entity.EntityEventJS;
+import dev.latvian.mods.kubejs.entity.KubeEntityEvent;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 
-public class EntitySpellCastEventJS extends EntityEventJS {
-    private final LivingEntity entity;
-    private final AbstractSpell spell;
-    private final int spellLevel;
-    private final Level level;
-    private final MagicData playerMagicData;
+public class EntitySpellCastEventJS implements KubeEntityEvent {
+	private final LivingEntity entity;
+	private final AbstractSpell spell;
+	private final int spellLevel;
+	private final Level level;
+	private final MagicData playerMagicData;
 
-    public EntitySpellCastEventJS(LivingEntity entity, AbstractSpell spell, int spellLevel, MagicData playerMagicData) {
-        this.entity = entity;
-        this.spell = spell;
-        this.spellLevel = spellLevel;
-        this.level = entity.level();
-        this.playerMagicData = playerMagicData;
-    }
+	public EntitySpellCastEventJS(LivingEntity entity, AbstractSpell spell, int spellLevel, MagicData playerMagicData) {
+		this.entity = entity;
+		this.spell = spell;
+		this.spellLevel = spellLevel;
+		this.level = entity.level();
+		this.playerMagicData = playerMagicData;
+	}
 
-    @Override
-    public Entity getEntity() {
-        return entity;
-    }
+	@Override
+	public Entity getEntity() {
+		return entity;
+	}
 
-    @SuppressWarnings("unused")
-    public AbstractSpell getSpell() {
-        return spell;
-    }
+	@SuppressWarnings("unused")
+	public AbstractSpell getSpell() {
+		return spell;
+	}
 
-    @SuppressWarnings("unused")
-    public int getSpellLevel() {
-        return spellLevel;
-    }
+	@SuppressWarnings("unused")
+	public int getSpellLevel() {
+		return spellLevel;
+	}
 
-    @SuppressWarnings("unused")
-    public Level getLevel() {
-        return level;
-    }
+	@SuppressWarnings("unused")
+	public Level getLevel() {
+		return level;
+	}
 
-    @SuppressWarnings("unused")
-    public MagicData getMagicData() {
-        return playerMagicData;
-    }
+	@SuppressWarnings("unused")
+	public MagicData getMagicData() {
+		return playerMagicData;
+	}
 }

@@ -3,6 +3,8 @@ package com.squoshi.irons_spells_js.util;
 import dev.latvian.mods.kubejs.typings.Info;
 import io.redspace.ironsspellbooks.block.alchemist_cauldron.AlchemistCauldronRecipe;
 import io.redspace.ironsspellbooks.block.alchemist_cauldron.AlchemistCauldronRecipeRegistry;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.Potion;
 
@@ -10,13 +12,13 @@ import net.minecraft.world.item.alchemy.Potion;
 public class AlchemistCauldronKubeJSRecipes {
     private static AlchemistCauldronRecipe addAlchemistCauldronRecipe(ItemStack input, ItemStack ingredient, ItemStack result) {
         AlchemistCauldronRecipe recipe = new AlchemistCauldronRecipe(input, ingredient, result);
-        AlchemistCauldronRecipeRegistry.addRecipe(recipe);
+        AlchemistCauldronRecipeRegistry.registerRecipe(BuiltInRegistries.ITEM.getKey(recipe.getResult().getItem()), recipe);
         return recipe;
     }
 
     private static AlchemistCauldronRecipe addAlchemistCauldronRecipe(Potion input, ItemStack ingredient, ItemStack result) {
-        AlchemistCauldronRecipe recipe = new AlchemistCauldronRecipe(input, ingredient.getItem(), result.getItem());
-        AlchemistCauldronRecipeRegistry.addRecipe(recipe);
+        AlchemistCauldronRecipe recipe = new AlchemistCauldronRecipe(Holder.direct(input), ingredient.getItem(), result.getItem());
+        AlchemistCauldronRecipeRegistry.registerRecipe(BuiltInRegistries.ITEM.getKey(recipe.getResult().getItem()),recipe);
         return recipe;
     }
 

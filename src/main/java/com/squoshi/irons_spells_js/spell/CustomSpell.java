@@ -1,15 +1,14 @@
 package com.squoshi.irons_spells_js.spell;
 
-import com.squoshi.irons_spells_js.IronsSpellsJSPlugin;
 import com.squoshi.irons_spells_js.util.ISSKJSUtils;
 import dev.latvian.mods.kubejs.registry.BuilderBase;
-import dev.latvian.mods.kubejs.registry.RegistryInfo;
 import dev.latvian.mods.kubejs.typings.Info;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
 import io.redspace.ironsspellbooks.api.spells.*;
 import io.redspace.ironsspellbooks.api.util.AnimationHolder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -17,7 +16,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 import java.util.Optional;
@@ -93,12 +91,12 @@ public class CustomSpell extends AbstractSpell {
 
     @Override
     public Optional<SoundEvent> getCastStartSound() {
-        return startSound != null ? Optional.ofNullable(ForgeRegistries.SOUND_EVENTS.getValue(startSound.getLocation())) : super.getCastStartSound();
+        return startSound != null ? Optional.ofNullable(BuiltInRegistries.SOUND_EVENT.get(startSound.getLocation())) : super.getCastStartSound();
     }
 
     @Override
     public Optional<SoundEvent> getCastFinishSound() {
-        return finishSound != null ? Optional.ofNullable(ForgeRegistries.SOUND_EVENTS.getValue(finishSound.getLocation())) : super.getCastFinishSound();
+        return finishSound != null ? Optional.ofNullable(BuiltInRegistries.SOUND_EVENT.get(finishSound.getLocation())) : super.getCastFinishSound();
     }
 
     @Override
@@ -142,10 +140,10 @@ public class CustomSpell extends AbstractSpell {
         return allowLooting;
     }
 
-    @Override
-    public boolean needsLearning() {
-        return needsLearning;
-    }
+//    @Override
+//    public boolean needsLearning() {
+//        return needsLearning;
+//    }
 
     @Override
     public boolean canBeCraftedBy(Player player) {
@@ -409,11 +407,6 @@ public class CustomSpell extends AbstractSpell {
         public Builder checkPreCastConditions(Predicate<PreCastConditionsContext> predicate) {
             this.preCastConditions = predicate;
             return this;
-        }
-
-        @Override
-        public RegistryInfo<AbstractSpell> getRegistryType() {
-            return IronsSpellsJSPlugin.SPELL_REGISTRY;
         }
 
         @Override

@@ -18,6 +18,12 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.lifecycle.InterModEnqueueEvent;
+import net.neoforged.neoforge.common.NeoForge;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
@@ -32,14 +38,13 @@ public class IronsSpellsJSMod {
     @HideFromJS
     public static ArrayList<Item> MANA_BAR_ITEMS = new ArrayList<>();
 
-    public IronsSpellsJSMod() {
-        final IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        bus.addListener(this::runIronSpellsConfig);
+    public IronsSpellsJSMod(IEventBus modEventBus, ModContainer modContainer) {
+        modEventBus.addListener(this::runIronSpellsConfig);
 
-        MinecraftForge.EVENT_BUS.addListener(IronsSpellsJSEvents::changeMana);
-        MinecraftForge.EVENT_BUS.addListener(IronsSpellsJSEvents::spellCast);
-        MinecraftForge.EVENT_BUS.addListener(IronsSpellsJSEvents::spellPreCast);
-        MinecraftForge.EVENT_BUS.addListener(IronsSpellsJSEvents::spellSelectionManager);
+        NeoForge.EVENT_BUS.addListener(IronsSpellsJSEvents::changeMana);
+        NeoForge.EVENT_BUS.addListener(IronsSpellsJSEvents::spellCast);
+        NeoForge.EVENT_BUS.addListener(IronsSpellsJSEvents::spellPreCast);
+        NeoForge.EVENT_BUS.addListener(IronsSpellsJSEvents::spellSelectionManager);
     }
 
     private void runIronSpellsConfig(InterModEnqueueEvent event){
@@ -49,7 +54,7 @@ public class IronsSpellsJSMod {
             ServerConfigsAccessor.invoke$createSpellConfig((AbstractSpell) builder.get());
         });
         ServerConfigsAccessor.getBuilder().pop();
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, ServerConfigsAccessor.getBuilder().build(), String.format("%s-server.toml", IronsSpellbooks.MODID));
+        ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.SERVER, ServerConfigsAccessor.getBuilder().build(), String.format("%s-server.toml", IronsSpellbooks.MODID));
     }
 
     @SubscribeEvent
